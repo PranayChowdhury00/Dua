@@ -1,0 +1,77 @@
+[
+    {
+      "id": 1,
+      "title": "Introduction to Dua",
+      "subCategory": 11,
+      "duasCount": 15,
+      "icon": "/islamic_img.png",
+      "details": [
+        "What is Dua",
+        "Conditions for Dua to be successful",
+        "The Methode Of Dua",
+        "Before Dua",
+        "During Dua",
+        "Prerequisites of writing Dua and drinking it's water",
+        "The correct way to perform Dua for a small child"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Daily Duas",
+      "subCategory": 5,
+      "duasCount": 20,
+      "icon": "/islamic_img.png",
+      "details": [
+        "Dua for waking up",
+        "Dua before sleeping",
+        "Dua before eating",
+        "Dua after eating",
+        "Dua when entering the bathroom",
+        "Dua when leaving the bathroom",
+        "Dua for entering and leaving the house"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Travel Duas",
+      "subCategory": 3,
+      "duasCount": 10,
+      "icon": "/islamic_img.png",
+      "details": [
+        "Dua before starting a journey",
+        "Dua while riding a vehicle",
+        "Dua upon reaching destination",
+        "Dua for returning home safely",
+        "Dua for protection during travel"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Morning & Evening Duas",
+      "subCategory": 7,
+      "duasCount": 18,
+      "icon": "/islamic_img.png",
+      "details": [
+        "Dua for a blessed morning",
+        "Dua for protection throughout the day",
+        "Dua for the evening",
+        "Dua for forgiveness and mercy",
+        "Dua to thank Allah"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Duas for Illness & Hardship",
+      "subCategory": 6,
+      "duasCount": 12,
+      "icon": "/islamic_img.png",
+      "details": [
+        "Dua for healing",
+        "Dua for patience during illness",
+        "Dua for relief from pain",
+        "Dua when visiting a sick person",
+        "Dua for protection from diseases"
+      ]
+    }
+  ]
+  
