@@ -1,29 +1,24 @@
-import { openDB } from '@/app/lib/db';
+import { openDB } from "@/lib/db";
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const cat_id = searchParams.get('cat_id');
-
-  if (!cat_id) {
-    return new Response(JSON.stringify({ error: 'cat_id is required' }), {
-      status: 400,
-    });
-  }
-
-  try {
-    const db = await openDB();
-    const subcategories = await db.all(
-      'SELECT * FROM sub_category WHERE cat_id = ?',
-      [cat_id]
-    );
-
-    return new Response(JSON.stringify(subcategories), {
-      status: 200,
-    });
-  } catch (err) {
-    console.error('Error fetching subcategories:', err);
-    return new Response(JSON.stringify({ error: 'Failed to fetch subcategories' }), {
-      status: 500,
-    });
-  }
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const cat_id = searchParams.get("cat_id");
+    try {
+        const db = await openDB();
+        const query = cat_id
+            ? `SELECT * FROM sub_category WHERE cat_id = ?`
+            : `SELECT * FROM sub_category`;
+        const params = cat_id ? [cat_id] : [];
+        const subcategories = await db.all(query, params);
+        return new Response(JSON.stringify({ subcategories }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        });
+    } catch (err) {
+        console.error("Error fetching subcategories:", err);
+        return new Response(
+            JSON.stringify({ error: "Error fetching subcategories" }),
+            { status: 500, headers: { "Content-Type": "application/json" } }
+        );
+    }
 }

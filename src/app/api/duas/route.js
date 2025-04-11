@@ -1,38 +1,18 @@
-import { openDB } from '@/app/lib/db';
+import { NextResponse } from 'next/server';
+import path from 'path';
+import { open } from 'sqlite';
+import sqlite3 from 'sqlite3';
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const cat_id = searchParams.get('cat_id');
-  const subcat_id = searchParams.get('subcat_id');
+async function openDB() {
+  const dbPath = path.join(process.cwd(), 'dua_main.sqlite');
+  return open({
+    filename: dbPath,
+    driver: sqlite3.Database,
+  });
+}
 
-  try {
-    const db = await openDB();
-    let query = 'SELECT * FROM dua';
-    const conditions = [];
-    const params = [];
-
-    if (cat_id) {
-      conditions.push('cat_id = ?');
-      params.push(cat_id);
-    }
-
-    if (subcat_id) {
-      conditions.push('subcat_id = ?');
-      params.push(subcat_id);
-    }
-
-    if (conditions.length > 0) {
-      query += ' WHERE ' + conditions.join(' AND ');
-    }
-
-    const duas = await db.all(query, params);
-    return new Response(JSON.stringify(duas), {
-      status: 200,
-    });
-  } catch (err) {
-    console.error('Error fetching duas:', err);
-    return new Response(JSON.stringify({ error: 'Failed to fetch duas' }), {
-      status: 500,
-    });
-  }
+export async function GET() {
+  const db = await openDB();
+  const duas = await db.all('SELECT * FROM dua'); // Replace with your actual table name
+  return NextResponse.json(duas);
 }

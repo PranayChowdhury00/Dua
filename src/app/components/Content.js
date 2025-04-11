@@ -1,35 +1,60 @@
-import DuaCard from './DuaCard';
+'use client';
 
-export default async function Content() {
-  try {
-    // Construct the full API URL using the base URL of the app
-    const apiUrl = `${window.location.origin}/api/duas`;
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
-    // Fetch data from the API route
-    const res = await fetch(apiUrl, {
-      cache: 'no-store', // Ensure fresh data on each request
-    });
+export default function Content() {
+  const [duas, setDuas] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(3); // Only show 3 items initially
 
-    if (!res.ok) {
-      throw new Error('Failed to load duas');
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch('/api/duas');
+      const data = await res.json();
+      setDuas(data || []);
     }
 
-    const duas = await res.json();
+    fetchData();
+  }, []);
 
-    if (!duas || duas.length === 0) {
-      return <div className="p-6">No duas found</div>;
-    }
+  const loadMore = () => {
+    setVisibleCount((prev) => prev + 3); // Show 3 more each time
+  };
 
-    return (
-      <div className="flex-1 p-6 overflow-y-auto">
-        {duas.map((dua) => (
-          // If 'id' is available on each 'dua', use it for the key
-          <DuaCard key={dua.id || dua.name} dua={dua} />
+  return (
+    <div className="p-4 ml-4 mr-4">
+      <h2 className="text-xl font-bold mb-4">Duas</h2>
+      <ul className="space-y-2">
+        {duas.slice(0, visibleCount).map((dua) => (
+          <li key={dua.id} className="bg-gray-100 p-3 rounded">
+            <div className="flex items-center gap-4 mb-6">
+              <Image
+                src="/allah.png"
+                width={50}
+                height={50}
+                alt="Picture of the author"
+              />
+              <h3 className="text-2xl font-semibold text-green-500 py-4">
+                {dua.dua_name_en}
+              </h3>
+            </div>
+            <p className="text-xl font-medium">{dua.top_en}</p>
+            <div className="mt-3">
+              <p className="text-green-500 font-bold mb-1">Reference</p>
+              <p className="text-gray-500 font-medium">{dua.refference_en}</p>
+            </div>
+          </li>
         ))}
-      </div>
-    );
-  } catch (error) {
-    console.error(error);
-    return <div className="p-6 text-red-500">Error: {error.message}</div>;
-  }
+      </ul>
+
+      {visibleCount < duas.length && (
+        <button
+          onClick={loadMore}
+          className="mt-6 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Load More
+        </button>
+      )}
+    </div>
+  );
 }

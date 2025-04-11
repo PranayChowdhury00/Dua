@@ -10,7 +10,7 @@ export default function SettingsPanel() {
   };
 
   return (
-    <div className="w-64 bg-white shadow-md h-full mt-5 ml-5 p-5 rounded-2xl">
+    <div className="w-full bg-white shadow-md h-[600px] mt-5 ml-5 p-5 rounded-2xl">
       <h2 className="text-lg font-semibold mb-6 text-gray-800">Settings</h2>
 
       {/* Language Setting */}

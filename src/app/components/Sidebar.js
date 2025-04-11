@@ -2,7 +2,7 @@ import { FaHandsPraying, FaHandHoldingHeart } from "react-icons/fa6";
 
 export default function Sidebar() {
   return (
-    <div className="w-56 mr-5 bg-white shadow-md h-full p-4 flex flex-col justify-between">
+    <div className="h-[700px] mr-5 ml-5 mt-5 rounded-2xl bg-white shadow-md  p-4 flex flex-col justify-between">
       {/* Header Icon */}
       <div className="flex items-center justify-center mb-6">
         <FaHandsPraying className="text-4xl text-green-600" />
