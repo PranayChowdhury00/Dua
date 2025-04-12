@@ -1,28 +1,29 @@
+
 'use client';
 
-import { useState, useEffect } from "react";
-import { CiSearch } from "react-icons/ci";
-import Image from "next/image";
+import { useState, useEffect } from 'react';
+import { CiSearch } from 'react-icons/ci';
+import Image from 'next/image';
 
-const Sidebar2 = () => {
-  const [searchText, setSearchText] = useState("");
+const Sidebar2 = ({ onCategorySelect }) => {
+  const [searchText, setSearchText] = useState('');
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [expandedCategoryId, setExpandedCategoryId] = useState(null);
   const [allCategories, setAllCategories] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        setLoading(true); // Start loading
-        const res = await fetch("/api/categories"); // adjust path if needed
+        setLoading(true);
+        const res = await fetch('/api/categories');
         const data = await res.json();
         setAllCategories(data.categories);
         setFilteredCategories(data.categories);
-        setLoading(false); // Stop loading
+        setLoading(false);
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
-        setLoading(false); // Stop loading even if there's an error
+        console.error('Failed to fetch categories:', error);
+        setLoading(false);
       }
     };
 
@@ -40,8 +41,13 @@ const Sidebar2 = () => {
     setExpandedCategoryId((prev) => (prev === id ? null : id));
   };
 
+  const handleCategoryClick = (catId) => {
+    onCategorySelect(catId); 
+    toggleExpand(catId);
+  };
+
   return (
-    <div className="h-[630px] bg-white shadow-md w-full rounded-xl overflow-y-auto mt-5">
+    <div className="h-full bg-white shadow-md w-54 rounded-xl mr-5">
       <h1 className="bg-green-500 font-bold text-white py-3 text-center rounded-t-xl">
         Categories
       </h1>
@@ -68,12 +74,12 @@ const Sidebar2 = () => {
           filteredCategories.map((category) => (
             <div key={category.id}>
               <div
-                onClick={() => toggleExpand(category.id)}
+                onClick={() => handleCategoryClick(category.id)}
                 className="flex items-center justify-between bg-gray-100 hover:bg-gray-200 p-2 rounded-md cursor-pointer"
               >
                 <div className="flex items-center gap-2">
                   <Image
-                    src={`/icons/${category.cat_icon}.png`} // ensure your image path is correct
+                    src={`/icons/${category.cat_icon}.png`}
                     alt={category.cat_name_en}
                     width={32}
                     height={32}
